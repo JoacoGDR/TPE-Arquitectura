@@ -54,7 +54,7 @@ void init_VM_Driver() {
 	SCREEN_bPP = screenData->bpp / 8;
 	SCREEN_HEIGHT = screenData->height;
 	SCREEN_WIDTH = screenData->width;
-	drawPixel(100, 100, 0x555555);
+	//drawPixel(100, 100, 0x555555);
 	
 	init_screen_driver(SCREEN_WIDTH, SCREEN_HEIGHT);
 	 

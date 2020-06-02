@@ -13,6 +13,7 @@ void drawCharInSpecificSpot(int x, int y, char character, int fontSize, int font
 */
 void drawChar2(char c);
 void drawSquare(int x, int y, int color);
+void drawString(char* string, int fontSize, int fontColor, int backgroundColor);
 void drawString2(char * str, int l);
 void update_cursor();
 unsigned int screen_width;
@@ -31,14 +32,14 @@ int current_line_width = 0;
 void init_screen_driver(unsigned int width, unsigned int height) {
 	screen_height = height; // viene con 768
 	screen_width = width;   // viene con 1024
-	width_position_last_row = 0;
-	height_position_last_row = screen_height - CHAR_HEIGHT;
+	width_position_last_row = 0;  							//
+	height_position_last_row = screen_height - CHAR_HEIGHT; //>>$: hola
 	//drawSquare(200, 200, 0xcccccc);
 	//drawChar2('A');
-	drawString2("HOL", 3);
 	
 	
-}
+	
+}	
 
 
 void drawChar2(char character){
@@ -74,10 +75,10 @@ void drawChar2(char character){
 
 void drawString2(char * str, int length){
 	//implementar strlen luego
-	char c;	
+	//char c;	
 	for(int i = 0; i < length; i++){
-		char c = str[i];
-		drawChar2(c);
+		//char c = str[i];
+		drawChar2(str[i]);
 	}
 }
 
@@ -87,6 +88,13 @@ void update_cursor() {
 	} else {
 		//move_screen_upwards();
 	 	width_position_last_row = 0;
+	}
+}
+
+//CAMBIAR Y PONER EL STRLEN
+void drawString(char* string, int fontSize, int fontColor, int backgroundColor) {
+	for(int i = 0; i < 3/*strlen(string)*/; i++){
+		drawChar2(string[i]/*, fontSize, fontColor, backgroundColor*/);
 	}
 }
 

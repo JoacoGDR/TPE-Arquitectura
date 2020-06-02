@@ -1,5 +1,5 @@
 /* sampleCodeModule.c */
-
+extern void syscall_write(char *, int);
 /**
 *	Funcion de libasm
 *	realiza una int 0x82
@@ -14,6 +14,11 @@ int main() {
 	// init_VM_Driver(); Esta es una funcion de Kernel, no deberia llamarla desde aca
 	
 	start_VM_Driver();
+	syscall_write("hol", 3);
+
+
+
+
 	//start_window_A(); ponele que siempre arrancamos en la window A que es la del shell
 	/*
 		Entonces armamos un shell que tenga sus cosas, la linea para escribir comandos, que interprete dichos comandos y haga lo que se le pida

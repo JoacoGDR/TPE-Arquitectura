@@ -10,13 +10,13 @@
 
 #include <idtLoader.h>
 
-//void _systemCallsHandler(void);
+void _systemCallsHandler(void);
 void _initVideoDriver(void);
 //void init_VM_Driver_END(void);
 //void _drawSquareHandler(void);
-//void _irq00Handler(void);
-//void _irq01Handler(void);
-//void _irq02Handler(void);
+void _irq00Handler(void);
+void _irq01Handler(void);
+void _irq02Handler(void);
 //void _irq03Handler(void);
 //void _irq04Handler(void);
 //void _irq05Handler(void);
