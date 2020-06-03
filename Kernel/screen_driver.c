@@ -93,9 +93,15 @@ void update_cursor() {
 
 //CAMBIAR Y PONER EL STRLEN
 void drawString(char* string, int fontSize, int fontColor, int backgroundColor) {
-	for(int i = 0; i < 3/*strlen(string)*/; i++){
-		drawChar2(string[i]/*, fontSize, fontColor, backgroundColor*/);
+	//for(int i = 0; i < 3/*strlen(string)*/; i++){
+	//	drawChar2(string[i], fontSize, fontColor, backgroundColor*/);
+	//}
+	while(*string){
+		drawChar2(*string);
+		string++;
 	}
+ 
+
 }
 
 /*

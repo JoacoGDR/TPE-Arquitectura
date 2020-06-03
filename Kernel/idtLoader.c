@@ -23,7 +23,7 @@ static void setup_IDT_entry (int index, uint64_t offset);
 
 
 void load_idt() {
- // _cli();
+  //_cli();
   setup_IDT_entry (0x20, (uint64_t)&_irq00Handler);  // Timer Tick
   setup_IDT_entry (0x21, (uint64_t)&_irq01Handler);  // Teclado
  // setup_IDT_entry (0x00, (uint64_t)&_exception0Handler);
@@ -31,9 +31,10 @@ void load_idt() {
   setup_IDT_entry (0x82, (uint64_t)&_initVideoDriver);
  // setup_IDT_entry (0x81, (uint64_t)&_drawSquareHandler); //
 
-  picMasterMask(0xFC);  // habilita las interrupciones de teclado y timer tick 
- // picMasterMask(0xFD); // HABILITA UNICAMENTE LAS INTERRUPCIONES DE TECLADO
- // picSlaveMask(0xFF);
+// PUEDE QUE TENGAMOS TEMAS POR ACA 
+  picMasterMask(0xFC);  // habilita las interrupciones de teclado y timer tick  (HORACIO)
+  //picMasterMask(0xFD); // HABILITA UNICAMENTE LAS INTERRUPCIONES DE TECLADO   (y esto creo que nosotros)
+ // picSlaveMask(0xFF);                       PUEDE QUE TENGAMOS TEMAS POR ACA                                    //rt
         
   _sti();  // sets flag IF to 1 ==> maskable hardware interrupts will be handled
 }

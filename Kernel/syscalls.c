@@ -19,17 +19,17 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 		case 4:{
 			switch(file_descriptor){
 				case STD_OUTPUT:{
-					drawString(string, 10, 0xFFFFFF, 0xFF00FF);
+					drawString(string,  10, 0xFFFFFF, 0xFF00FF); 
 				}
 			}
 			break;
 		}
 		case 3:{
-			aux = keyboard_handler();
+			aux = keyboard_handler(); 
 			switch(file_descriptor) {
 				case STD_INPUT:{
 					if(aux == 1){
-						aux2 = get_keyboard_buffer();
+						aux2 = get_keyboard_buffer(); 
 						string[0] = aux2;
 					} else {
 						string[0] = -1;

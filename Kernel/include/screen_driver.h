@@ -14,5 +14,6 @@ void drawSquare(int x, int y, int color);
 // ya que es muy "poderosa" (podes escribir en cualquier lado)
 void drawCharInSpecificSpot(int x, int y, char character, int fontSize, int fontColor, int backgroundColor);
 void drawNumber2(int x, int y, int number, int fontSize, int fontColor, int backgroundColor);
+void drawString2(char * c, int length);
 
 #endif

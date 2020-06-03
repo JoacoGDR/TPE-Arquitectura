@@ -10,7 +10,7 @@ void irqDispatcher(uint64_t irq) {
 		case 0:
 			int_20();
 			break;
-		case 8:
+		case 1:
 			int_21();
 			break;
 		

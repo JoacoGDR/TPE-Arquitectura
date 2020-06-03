@@ -1,6 +1,8 @@
 /* sampleCodeModule.c */
-extern void syscall_write(char *, int);
+
 /**
+ * Comentario para masomenos entender la logica de como se trabaja:
+ * start_VM_Driver():
 *	Funcion de libasm
 *	realiza una int 0x82
 *	en 0x82, cargamos (con el IDTloader) la interrupcion que hara que se llame a init_VM_Driver()
@@ -9,12 +11,32 @@ extern void syscall_write(char *, int);
 *
 */
 extern void start_VM_Driver(); //Se encuentra en libasm.asm (de userland)
+extern void syscall_write(char *, int);
+void putchar(char * c);
+char getChar();
 
 int main() {
 	// init_VM_Driver(); Esta es una funcion de Kernel, no deberia llamarla desde aca
-	
+
+	syscall_write("", 0);
 	start_VM_Driver();
 	syscall_write("hol", 3);
+	
+	char * c;
+	while(1){
+
+
+		//syscall_write(getChar(), 1);
+	    c = getChar();
+		if(c != -1)
+			putChar(&c);
+
+	}
+	
+	
+	
+
+	
 
 
 

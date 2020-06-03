@@ -25,7 +25,7 @@ int keyboard_handler(){
 		return -1;
 	}
 	else{
-		update_keyboard_buffer(letra);
+		update_keyboard_buffer(letra); 
 		return 1;
 		//drawString(keyboard_buffer, 10, 0x000000, 0xFFFFFF);
 		//drawChar(letra, 10, 0x000000, 0xFFFFFF);

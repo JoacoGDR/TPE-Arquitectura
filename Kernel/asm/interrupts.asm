@@ -171,8 +171,8 @@ _initVideoDriver:
 	pop r10
 	pop r9
 	pop r8
-;	pop rsi   ; esto habria que comantarlooo
-;	pop rdi    ; esto tambiennn
+;	pop rsi   ;Porque aca se retornan valores de height y width 
+;	pop rdi    ;
 	pop rbp
 	pop rdx
 	pop rcx
@@ -180,16 +180,16 @@ _initVideoDriver:
 	pop rax
 	ret
 
-;init_VM_Driver_END:
-;	push rbp
-;	mov rbp, rsp
-;
-;	mov rdi, rdi  ; screen width
-;	mov rsi, rsi  ; screen height
-;
-;	mov rsp, rbp
-;	pop rbp
-;	ret
+init_VM_Driver_END:
+	push rbp
+	mov rbp, rsp
+
+	mov rdi, rdi  ; screen width
+	mov rsi, rsi  ; screen height
+
+	mov rsp, rbp
+	pop rbp
+	ret
 
 ;8254 Timer (Timer Tick)
 _irq00Handler:
@@ -197,7 +197,7 @@ _irq00Handler:
 
 ;Keyboard
 _irq01Handler:
-	irqHandlerMaster 8
+	irqHandlerMaster 1
 
 ;Cascade pic never called
 _irq02Handler:
