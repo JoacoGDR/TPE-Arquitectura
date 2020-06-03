@@ -1,50 +1,3 @@
-cd root/
-cd Toolchain/
-make
-cd ..
-make
-exit
-cd root/
-cd Toolchain/
-make
-cd ..
-make
-exit
-cd root/
-cd Toolchain/
-make clean
-cd ..
-make clean
-cd Toolchain/
-make
-cd ..
-make
-exit
-cd root/
-make
-make
-make
-make
-make
-make
-make
-make
-exit
-mak
-make
-cd root/
-make
-exit
-cd root/
-make
-exit
-cd root/
-make
-make clean
-make
-exit
-cd root/
-make
 exit
 cd root/
 make clean
@@ -458,6 +411,87 @@ make all
 exit
 cd root/
 make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+./run.sh 
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make all
+exit
+cd root/
 make all
 exit
 cd root/

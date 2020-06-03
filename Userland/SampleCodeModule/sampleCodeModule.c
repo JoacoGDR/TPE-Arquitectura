@@ -21,7 +21,8 @@ int main() {
 	syscall_write("", 0);
 	start_VM_Driver();
 	syscall_write("hol", 3);
-	
+	//syscall_write("\b", 1);
+
 	char * c;
 	while(1){
 

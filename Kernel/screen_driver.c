@@ -1,6 +1,9 @@
 #include <video_driver.h>
 #include <font.h>
 #include <lib.h>
+#define SCREEN_CHAR_LENGTH 129
+#define SCREEN_CHAR_WIDTH 48
+#define SCREEN_LIMIT 120
 /*
 int strlen(char*);
 int getNumberLength(int);
@@ -11,11 +14,13 @@ void move_screen_upwards();
 void drawCharInSpecificSpot(int x, int y, char character, int fontSize, int fontColor, int backgroundColor);
 
 */
-void drawChar2(char c);
+void drawChar2(char c, int fc, int bc);
 void drawSquare(int x, int y, int color);
 void drawString(char* string, int fontSize, int fontColor, int backgroundColor);
 void drawString2(char * str, int l);
 void update_cursor();
+void updateLines();
+
 unsigned int screen_width;
 unsigned int screen_height;
 
@@ -39,48 +44,85 @@ void init_screen_driver(unsigned int width, unsigned int height) {
 	
 	
 	
-}	
-
-
-void drawChar2(char character){
-	 int fontColor = 0x666666;
-    int backgroundColor = 0xffffff;
-
-
-   lines[current_line_height][current_line_width] = character;
-		current_line_width += 1;
-
-		int aux_x = width_position_last_row;
-		int aux_y = height_position_last_row;
-		char bitsIsPresent;
-		unsigned char* toDraw = charBitmap(character);
-		for(int i = 0; i<CHAR_HEIGHT; i++){
-			for(int j=0; j<CHAR_WIDTH; j++){
-				bitsIsPresent = (1 << (CHAR_WIDTH - j)) & toDraw[i];
-				if(bitsIsPresent)
-					drawPixel(aux_x, aux_y, fontColor);
-				else
-					drawPixel(aux_x, aux_y, backgroundColor);
-				aux_x += 1;
-			}
-			aux_x = width_position_last_row;
-			aux_y += 1;
-		}
-
-
- update_cursor();
-		
-
 }
+void drawChar2(char character, int fontColor ,int backgroundColor){
+	 //int fontColor = 0x666666;
+	 //backgroundColor = 0xffffff;
 
-void drawString2(char * str, int length){
-	//implementar strlen luego
-	//char c;	
-	for(int i = 0; i < length; i++){
-		//char c = str[i];
-		drawChar2(str[i]);
+	 if(character == '\n'){
+		move_screen_upwards();
+		width_position_last_row = 0;
+		current_line_width = 0;
 	}
+ /// aaaaaaa
+	else if(character == '\b'){
+		if(width_position_last_row > 0){
+			width_position_last_row -= CHAR_WIDTH;
+			clearCharDisplay(width_position_last_row, height_position_last_row);
+			current_line_width--; //porque si llegue al final deberia poder borrar, y volver a escribir, pero el if de mas abajo no me dejaria hacerlo si no hago eso
+		}else{
+			height_position_last_row -= CHAR_HEIGHT;
+			width_position_last_row = SCREEN_LIMIT - CHAR_WIDTH;//screen_width-CHAR_WIDTH;
+			current_line_width = width_position_last_row;
+			clearCharDisplay(width_position_last_row, height_position_last_row);
+		}
+	}
+    
+
+	/*else if(character == '\b'){
+		if(width_position_last_row > 1){
+			width_position_last_row -= CHAR_WIDTH;
+			drawChar2(' ', 0x000000, 0x000000);
+			width_position_last_row -= CHAR_WIDTH;
+		}
+		else if(width_position_last_row == 0){
+			
+		}
+		else if(width_position_last_row == 1){
+			width_position_last_row = screen_width;
+			height_position_last_row -= CHAR_HEIGHT;
+			drawChar2(' ', 0x000000, 0x000000);
+			width_position_last_row -= CHAR_WIDTH;
+			
+		}
+	}*/
+
+	else{ 
+			if(current_line_width <= SCREEN_LIMIT){
+				lines[current_line_height][current_line_width] = character;
+						current_line_width += 1;
+						int aux_x = width_position_last_row;
+						int aux_y = height_position_last_row;
+						char bitsIsPresent;
+						unsigned char* toDraw = charBitmap(character);
+						for(int i = 0; i<CHAR_HEIGHT; i++){
+							for(int j=0; j<CHAR_WIDTH; j++){
+								bitsIsPresent = (1 << (CHAR_WIDTH - j)) & toDraw[i];
+								if(bitsIsPresent)
+									drawPixel(aux_x, aux_y, fontColor);
+								else
+									drawPixel(aux_x, aux_y, backgroundColor);
+								aux_x += 1;
+							}
+							aux_x = width_position_last_row;
+							aux_y += 1;
+						}
+				update_cursor();
+		}
+	}
+				
 }
+
+/*
+for(j ...){
+	lines[last_row-2][j] = lines[last_row-1][j];
+	lines[last_row-1][j] = 0;
+}
+lines[i][j] = lines[i+1][j];
+lines[last_row][j] = '_';
+*/
+
+
 
 void update_cursor() {
 	if( width_position_last_row < screen_width - CHAR_WIDTH ) {
@@ -97,11 +139,76 @@ void drawString(char* string, int fontSize, int fontColor, int backgroundColor) 
 	//	drawChar2(string[i], fontSize, fontColor, backgroundColor*/);
 	//}
 	while(*string){
-		drawChar2(*string);
+		drawChar2(*string,0x666666,0xffffff);
 		string++;
 	}
  
 
+}
+
+
+void drawCharInSpecificSpot(int x, int y, char character, int fontSize, int fontColor, int backgroundColor){
+	int aux_x = x;
+	int aux_y = y;
+	char bitsIsPresent;
+	unsigned char* toDraw = charBitmap(character);
+	for(int i = 0; i<CHAR_HEIGHT; i++){
+		for(int j=0; j<CHAR_WIDTH; j++){
+			bitsIsPresent = (1 << (CHAR_WIDTH - j)) & toDraw[i];
+			if(bitsIsPresent)
+				drawPixel(aux_x, aux_y, fontColor);
+			else
+				drawPixel(aux_x, aux_y, backgroundColor);
+			aux_x += 1;
+		}
+		aux_x = x;
+		aux_y += 1;
+	}
+}
+
+void move_screen_upwards() {
+	int width_position_to_write_next = 0;
+	int height_position_to_write_next = 0;
+
+	for(int i=0; i<48-1; i++) {
+	
+		char* line_to_copy= lines[i+1];
+	
+		for(int j=0; line_to_copy[j]!='\0'; j++) {
+			lines[height_position_to_write_next][width_position_to_write_next] = line_to_copy[j];
+			drawCharInSpecificSpot(width_position_to_write_next * CHAR_WIDTH, height_position_to_write_next * CHAR_HEIGHT, line_to_copy[j], 10, 0xFFFFFF, 0x000000);
+			width_position_to_write_next+=1;
+		}
+	
+		lines[height_position_to_write_next][width_position_to_write_next] = '\0';
+		
+		// tambien tengo que limpiar el resto de la linea que quedo.
+		for(int k = width_position_to_write_next; k < screen_width/CHAR_WIDTH; k++) {
+			clearCharDisplay(k * CHAR_WIDTH, height_position_to_write_next * CHAR_HEIGHT);
+		}
+	
+		width_position_to_write_next = 0;
+		height_position_to_write_next += 1;
+	}
+	// tengo que vaciar la ultima linea de la pantalla y la de la matriz
+	for(int i = 0; i < screen_width/CHAR_WIDTH; i++) {
+		clearCharDisplay(i * CHAR_WIDTH, screen_height - CHAR_HEIGHT);
+		lines[height_position_to_write_next][i] = '\0';
+	}
+}
+
+void clearCharDisplay(int x, int y) {
+	int aux_x=x;
+	int aux_y=y;
+	int black_color = 0x000000;
+	for(int i = 0; i < CHAR_HEIGHT; i++) {
+		for(int j = 0; j < CHAR_WIDTH; j++) {
+			drawPixel(aux_x, aux_y, black_color);
+			aux_x+=1;
+		}
+		aux_x=x;
+		aux_y+=1;
+	}
 }
 
 /*
@@ -134,24 +241,7 @@ void drawNumber2(int x, int y, int number, int fontSize, int fontColor, int back
 	}
 }
 
-void drawCharInSpecificSpot(int x, int y, char character, int fontSize, int fontColor, int backgroundColor){
-	int aux_x = x;
-	int aux_y = y;
-	char bitsIsPresent;
-	unsigned char* toDraw = charBitmap(character);
-	for(int i = 0; i<CHAR_HEIGHT; i++){
-		for(int j=0; j<CHAR_WIDTH; j++){
-			bitsIsPresent = (1 << (CHAR_WIDTH - j)) & toDraw[i];
-			if(bitsIsPresent)
-				drawPixel(aux_x, aux_y, fontColor);
-			else
-				drawPixel(aux_x, aux_y, backgroundColor);
-			aux_x += 1;
-		}
-		aux_x = x;
-		aux_y += 1;
-	}
-}
+
 
 void drawChar(char character, int fontSize, int fontColor, int backgroundColor){
 	if(character == '\n'){
@@ -191,29 +281,36 @@ void drawChar(char character, int fontSize, int fontColor, int backgroundColor){
 		}
 		update_cursor();
 	}
-}
+}        
+
 
 void move_screen_upwards() {
 	int width_position_to_write_next = 0;
 	int height_position_to_write_next = 0;
+
 	for(int i=0; i<48-1; i++) {
+	
 		char* line_to_copy= lines[i+1];
+	
 		for(int j=0; line_to_copy[j]!='\0'; j++) {
 			lines[height_position_to_write_next][width_position_to_write_next] = line_to_copy[j];
-			drawCharInSpecificSpot(width_position_to_write_next*CHAR_WIDTH, height_position_to_write_next*CHAR_HEIGHT, line_to_copy[j], 10, 0xFFFFFF, 0x000000);
+			drawCharInSpecificSpot(width_position_to_write_next * CHAR_WIDTH, height_position_to_write_next * CHAR_HEIGHT, line_to_copy[j], 10, 0xFFFFFF, 0x000000);
 			width_position_to_write_next+=1;
 		}
+	
 		lines[height_position_to_write_next][width_position_to_write_next] = '\0';
-		// tambien tengo que limpiar el resto de la linea que quedo
-		for(int k=width_position_to_write_next; k<screen_width/CHAR_WIDTH; k++) {
-			clearCharDisplay(k*CHAR_WIDTH, height_position_to_write_next*CHAR_HEIGHT);
+		
+		// tambien tengo que limpiar el resto de la linea que quedo.
+		for(int k = width_position_to_write_next; k < screen_width/CHAR_WIDTH; k++) {
+			clearCharDisplay(k * CHAR_WIDTH, height_position_to_write_next * CHAR_HEIGHT);
 		}
+	
 		width_position_to_write_next = 0;
 		height_position_to_write_next+=1;
 	}
 	// tengo que vaciar la ultima linea de la pantalla y la de la matriz
-	for(int i=0; i<screen_width/CHAR_WIDTH; i++) {
-		clearCharDisplay(i*CHAR_WIDTH, screen_height-CHAR_HEIGHT);
+	for(int i = 0; i < screen_width/CHAR_WIDTH; i++) {
+		clearCharDisplay(i * CHAR_WIDTH, screen_height - CHAR_HEIGHT);
 		lines[height_position_to_write_next][i] = '\0';
 	}
 }
