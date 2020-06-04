@@ -1,5 +1,5 @@
 extern void syscall_read(int, char*, int);
-extern void syscall_write(char *, int);
+extern void syscall_write(char *);
 
 void putchar(char * c);
 
@@ -10,7 +10,7 @@ char getChar() {
 } 
 
 void putChar(char * c){
-    syscall_write(c, 1);
+    syscall_write(c);
 }
 
 void print(char * string){

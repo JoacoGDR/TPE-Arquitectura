@@ -19,7 +19,7 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 		case 4:{
 			switch(file_descriptor){
 				case STD_OUTPUT:{
-					drawString(string,  10, 0xFFFFFF, 0xFF00FF); 
+					drawString(string, 0xFFFFFF, 0x000000); 
 				}
 			}
 			break;

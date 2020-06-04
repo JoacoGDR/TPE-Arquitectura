@@ -15,8 +15,8 @@ void drawCharInSpecificSpot(int x, int y, char character, int fontSize, int font
 
 */
 void drawChar2(char c, int fc, int bc);
-void drawSquare(int x, int y, int color);
-void drawString(char* string, int fontSize, int fontColor, int backgroundColor);
+
+
 void drawString2(char * str, int l);
 void update_cursor();
 void updateLines();
@@ -133,12 +133,12 @@ void update_cursor() {
 }
 
 //CAMBIAR Y PONER EL STRLEN
-void drawString(char* string, int fontSize, int fontColor, int backgroundColor) {
+void drawString(char* string, int fontColor, int backgroundColor) {
 	//for(int i = 0; i < 3/*strlen(string)*/; i++){
 	//	drawChar2(string[i], fontSize, fontColor, backgroundColor*/);
 	//}
 	while(*string){
-		drawChar2(*string,0x666666,0xffffff);
+		drawChar2(*string,fontColor,backgroundColor);
 		string++;
 	}
  
@@ -146,7 +146,7 @@ void drawString(char* string, int fontSize, int fontColor, int backgroundColor) 
 }
 
 
-void drawCharInSpecificSpot(int x, int y, char character, int fontSize, int fontColor, int backgroundColor){
+void drawCharInSpecificSpot(int x, int y, char character,  int fontColor, int backgroundColor){
 	int aux_x = x;
 	int aux_y = y;
 	char bitsIsPresent;
@@ -175,7 +175,7 @@ void move_screen_upwards() {
 	
 		for(int j=0; line_to_copy[j]!='\0'; j++) {
 			lines[height_position_to_write_next][width_position_to_write_next] = line_to_copy[j];
-			drawCharInSpecificSpot(width_position_to_write_next * CHAR_WIDTH, height_position_to_write_next * CHAR_HEIGHT, line_to_copy[j], 10, 0xFFFFFF, 0x000000);
+			drawCharInSpecificSpot(width_position_to_write_next * CHAR_WIDTH, height_position_to_write_next * CHAR_HEIGHT, line_to_copy[j],  0xFFFFFF, 0x000000);
 			width_position_to_write_next+=1;
 		}
 	
@@ -457,16 +457,5 @@ void clearCharDisplay(){
 	}
 }//*/
 
-void drawSquare(int x, int y, int color){
-	int aux_x=x;
-	int aux_y=y;
-	for(int i = 0; i < CHAR_HEIGHT; i++) {
-		for(int j = 0; j < CHAR_WIDTH; j++) {
-			drawPixel(aux_x, aux_y, color);
-			aux_x+=1;
-		}
-		aux_x=x;
-		aux_y+=1;
-	}
-} 
+
 

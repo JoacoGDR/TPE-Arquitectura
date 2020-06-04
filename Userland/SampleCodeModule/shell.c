@@ -4,24 +4,28 @@
 
 #define SCREEN_LIMIT 120
 
-void inforeg();
+
 int screen_width;
 int screen_height;
 char buffer[SCREEN_LIMIT] = {'\0'};
 int buffer_size = 0;
-int getCommand();
-void executeCommand(int command);
+
+
 int strcmp();
 char getChar();
 void putChar(char * c);
+
+//son del libasm
 void get_temp();
+void printmem(int address);
+void inforeg();
+void printHexa(unsigned char h);
 
 void start_shell(/*int width, int height*/){
     //screen_width = width;
    // screen_height = height;
     
-    syscall_write(">>", 2);
-    
+    syscall_write(">>");
 
     shell_main();
 
@@ -30,10 +34,9 @@ void start_shell(/*int width, int height*/){
 void shell_main(){
 	char * c;
 	while(1){
-		//syscall_write(getChar(), 1);
+		//syscall_write(getChar());
 	    c = getChar();
 		if(c != -1){
-            get_temp();
             if(c == '\b'){
                 if(buffer_size != 0){
                     buffer[buffer_size] = '\0';
@@ -55,10 +58,10 @@ void shell_main(){
                     
                 }else
                 {
-                    syscall_write("Command not found\n", 18);
+                    syscall_write("Command not found\n");
                 }
                 buffer_size = 0; 
-                 syscall_write(">>", 2);
+                 syscall_write(">>");
                 
                 
             }
@@ -103,6 +106,102 @@ void executeCommand(int id){
     switch(id){
         case 0:
             inforeg();
+            break;
+        case 1:
+            syscall_write("Ingrese la dirección de la que quiere realizar el volcado de 32 bytes en formato hexadecimal.");
+          //  int arg = getArgument();
+           // printmem(arg);
+            break;
+        case 2:
+            help();
+            break;
     }
 }
+
+void help(){
+    for(int i = 0; i < NUMBER_OF_COMMANDS; i++){
+        syscall_write(commands[i]);
+        syscall_write(descriptions[i]);
+        putChar("\n");
+    }
+}
+/*
+void printmem(int address){
+
+    unsigned char * mem = address;
+     for(int i=0;i<32;i++){
+         printHexa( mem[i]);
+     }
+}
+
+void printHexa(unsigned char hexa){
+    //Cada char deberia imprimir 2 digitos hex
+    unsigned char resp[3];
+    resp[0] = (hexa/16);
+    resp[1] = (hexa%16);
+    resp[2] = 0;
+    for(int i = 0; i<2; i++){
+        if(resp[i]< 10){
+            resp[i]+='0';}
+        else{
+            resp[i]+='A' - 10;
+         }
+     }
+     syscall_write(resp);
+    
+    
+}
+
+int hexaString_to_int(char* str) 
+{ 
+    // Initialize result 
+    int res = 0; 
+  
+    // Iterate through all characters 
+    // of input string and update result 
+    for (int i = 0; str[i] != '\0'; ++i){
+        if(str[i] >= 'A' && str[i] <= 'F'){ 
+            res = res * 16 + str[i] - 'A' + 10;
+        }
+        else if(str[i] >= 'a' && str[i] <= 'f'){
+         res = res * 16 + str[i] - 'a' + 10;
+        }
+        else
+            res = res * 16 + str[i] - '0'; 
+    }
+  
+    // return result. 
+    return res; 
+} 
+
+
+
+/*
+int getArgument(){
+    while(1){
+        char c = getChar();
+        if(c != -1){
+            if(c == '\b'){
+                if(buffer_size != 0){
+                    buffer[buffer_size] = '\0';
+                    buffer_size--;   
+                     putChar(&c);
+
+                }
+            }
+            else if(c=='\n'){
+                                                                //si no es una direccion válida entonces error
+                return stringToNum(buffer);
+            }
+            else if(buffer_size < SCREEN_LIMIT){
+                buffer[buffer_size] = c;
+                buffer_size++;
+                 putChar(&c);
+            }
+
+        }
+    }
+    
+}
+*/
 

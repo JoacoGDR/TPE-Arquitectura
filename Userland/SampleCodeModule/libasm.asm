@@ -5,6 +5,7 @@ GLOBAL syscall_read
 GLOBAL syscall_write
 GLOBAL inforeg
 GLOBAL get_temp
+GLOBAL get_brand
 
 section .text
 
@@ -18,6 +19,77 @@ start_VM_Driver:
 	mov rsp, rbp
 	pop rbp 
 	ret
+
+
+
+get_brand:
+   push rbp
+   mov rbp, rsp
+    push rdi
+    push rsi
+    push rax
+    
+    
+    mov rax, 0
+    xor rax, rax
+
+
+
+
+
+
+   
+ 
+XOR EAX,EAX
+mov eax, 80000002h
+    CPUID
+    MOV dword  [name], eax
+    MOV dword  [name+4], ebx
+    MOV dword  [name+8], ecx
+    MOV dword  [name+12], edx
+ 
+    
+
+
+    ;mov rdi, name 
+    ;mov rsi, 48
+    ;call syscall_write
+
+    mov eax, 80000003h
+    CPUID
+    MOV dword  [name+16], eax
+    MOV dword  [name+20], ebx
+    MOV dword  [name+24], ecx
+    MOV dword  [name+28], edx
+ 
+    
+
+
+    ;mov rdi, name 
+    ;mov rsi, 40
+    ;call syscall_write
+;
+    mov eax, 80000004h
+    CPUID
+    MOV dword  [name+32], eax
+    MOV dword  [name+36], ebx
+    MOV dword  [name+40], ecx
+    MOV dword  [name+44], edx
+ 
+    
+
+
+    mov rdi, name 
+    mov rsi, 48
+    call syscall_write
+
+    pop rax
+    pop rsi
+    pop rdi
+    mov rsp, rbp
+    pop rbp
+    ret
+
 
 
 inforeg:
@@ -327,7 +399,7 @@ syscall_write:
     mov rax, 4
     mov rbx, 1
     mov rcx, rdi ; le paso el string
-    mov rdx, rsi ; le paso la longitud del string
+    mov rdx, 0 ; no se usa..
     int 80h
 
     pop rdx
@@ -338,16 +410,16 @@ syscall_write:
     pop rbp
     ret
 
+
 get_temp:
     push rbp
-      mov rbp, rsp
+    mov rbp, rsp
     push rdi
     push rbx
     push rax
 
-    mov rdi, temp
-    call syscall_write
-    mov rax, [0x19C]
+    mov rax, 1a2h
+    rdmsr
     mov rbx, numstr
     call num_to_str
     mov rdi, rax ;primero imprimo rax
@@ -355,12 +427,55 @@ get_temp:
     mov rdi, ntr
     call syscall_write
 
+
+    mov rax, 19ch
+     rdmsr
+    mov rbx, numstr
+    call num_to_str
+    mov rdi, rax ;primero imprimo rax
+    call syscall_write
+    mov rdi, ntr
+    call syscall_write
+
+
+
     pop rax
     pop rbx
     pop rdi
-    mov rsp,rbp
+    mov rsp, rbp
     pop rbp
-    ;IA32_THERM_Status MSR_TEMEPRATURE_TARGET
+    ret
+
+
+
+
+
+
+
+;get_temp:
+;    push rbp
+;      mov rbp, rsp
+;    push rdi
+;    push rbx
+;    push rax
+
+ ;   mov rdi, temp
+ ;   call syscall_write
+ ;   mov rax, [0x19C]
+ ;   mov rbx, numstr
+ ;   call num_to_str
+ ;   mov rdi, rax ;primero imprimo rax
+ ;   call syscall_write
+ ;   mov rdi, ntr
+ ;   call syscall_write
+
+ ;   pop rax
+ ;   pop rbx
+ ;   pop rdi
+ ;   mov rsp,rbp
+ ;   pop rbp
+ ;   ;IA32_THERM_Status MSR_TEMEPRATURE_TARGET
+    
 syscall_read:
     push rbp
     mov rbp, rsp 
@@ -421,11 +536,12 @@ num_to_str: ;en rax tengo mi numero
     pop rbp
     ret
 
-
 section .bss
 numstr resb 100000
+name resb 100
 
 section .data
+
     temp db "La temperatura de la PC :",0
     ntr db "", 10,0
     srax db "rax: ", 0
@@ -445,6 +561,15 @@ section .data
     sr14 db "r14: ", 0
     sr15 db "r15: ", 0
 ;
+;
+;  1A2 -> bits 23:16 TEMPERATURE TARGET 
+;  1A2 -> bits 29:24 TEMPERATURE OFFESET
+; si se suman los dos anteriores se consigue la temperatura
+; de alerta.
+
+;  19C -> 22-16 DIGITAL READOUT (Delta)
+; (delta) = -PC_TEMP + TEMP_ALERTA
+;  TEMP_ALERTA - (delta)  = PC_TEMP
 ;
 ;
 ;num_to_string:      ;acordate que el cociente de la division lo guarda en eax, el resto en edx, y el divisor en ecx
