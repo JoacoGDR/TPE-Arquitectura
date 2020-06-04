@@ -32,6 +32,7 @@ void load_idt() {
  // setup_IDT_entry (0x81, (uint64_t)&_drawSquareHandler); //
 
 // PUEDE QUE TENGAMOS TEMAS POR ACA 
+//
   picMasterMask(0xFC);  // habilita las interrupciones de teclado y timer tick  (HORACIO)
   //picMasterMask(0xFD); // HABILITA UNICAMENTE LAS INTERRUPCIONES DE TECLADO   (y esto creo que nosotros)
  // picSlaveMask(0xFF);                       PUEDE QUE TENGAMOS TEMAS POR ACA                                    //rt

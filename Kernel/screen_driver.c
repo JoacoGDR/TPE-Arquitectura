@@ -59,10 +59,9 @@ void drawChar2(char character, int fontColor ,int backgroundColor){
 		if(width_position_last_row > 0){
 			width_position_last_row -= CHAR_WIDTH;
 			clearCharDisplay(width_position_last_row, height_position_last_row);
-			current_line_width--; //porque si llegue al final deberia poder borrar, y volver a escribir, pero el if de mas abajo no me dejaria hacerlo si no hago eso
+			lines[current_line_height][--current_line_width] = '\0'; //Con esto soluciono el problema que tenia que al escribir por ejemplo "hola", borrar la "a" y enter, salia "hola".
+			//current_line_width -= 1; //porque si llegue al final deberia poder borrar, y volver a escribir, pero el if de mas abajo no me dejaria hacerlo si no hago eso
 		}else{
-			height_position_last_row -= CHAR_HEIGHT;
-			width_position_last_row = SCREEN_LIMIT - CHAR_WIDTH;//screen_width-CHAR_WIDTH;
 			current_line_width = width_position_last_row;
 			clearCharDisplay(width_position_last_row, height_position_last_row);
 		}
@@ -172,7 +171,7 @@ void move_screen_upwards() {
 
 	for(int i=0; i<48-1; i++) {
 	
-		char* line_to_copy= lines[i+1];
+		char* line_to_copy = lines[i+1];
 	
 		for(int j=0; line_to_copy[j]!='\0'; j++) {
 			lines[height_position_to_write_next][width_position_to_write_next] = line_to_copy[j];

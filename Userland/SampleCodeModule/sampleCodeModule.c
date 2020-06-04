@@ -14,25 +14,36 @@ extern void start_VM_Driver(); //Se encuentra en libasm.asm (de userland)
 extern void syscall_write(char *, int);
 void putchar(char * c);
 char getChar();
+void start_shell();
+
+int do_intel(void);
+int do_amd(void);
+void printregs(int eax, int ebx, int ecx, int edx);
 
 int main() {
 	// init_VM_Driver(); Esta es una funcion de Kernel, no deberia llamarla desde aca
 
 	syscall_write("", 0);
 	start_VM_Driver();
-	syscall_write("hol", 3);
+
+	
+	detect_cpu();
+	//syscall_write("hol", 3);
 	//syscall_write("\b", 1);
 
-	char * c;
-	while(1){
+	//char * c;
+	
+	start_shell();
 
 
+		
+/*
 		//syscall_write(getChar(), 1);
 	    c = getChar();
 		if(c != -1)
 			putChar(&c);
-
-	}
+*/
+	
 	
 	
 	
