@@ -20,6 +20,9 @@ void get_temp();
 void printmem(int address);
 void inforeg();
 void printHexa(unsigned char h);
+int getArgument();
+int hexaString_to_int(char* str);
+
 
 void start_shell(/*int width, int height*/){
     //screen_width = width;
@@ -91,12 +94,17 @@ int getCommand(){
 //retorna 1 si son iguales
 int strcmp(char * str1, char*str2){
     int i= 0;
-    for(i; str1[i] || str2[i]; i++){
+    for(i; str1[i] || str2[i] ; i++){
+        if(str1[i] == 0 && str2[i] == ' ')
+            return 1;
         if(str1[i] != str2[i])
             return 0;
     }
+
+
     if(str1[i] != str2[i])
         return 0;
+
     return 1;
 }
 
@@ -108,9 +116,10 @@ void executeCommand(int id){
             inforeg();
             break;
         case 1:
-            syscall_write("Ingrese la dirección de la que quiere realizar el volcado de 32 bytes en formato hexadecimal.");
-          //  int arg = getArgument();
-           // printmem(arg);
+            syscall_write("");
+            int arg = getArgument();
+            printmem(arg);
+            syscall_write("\n");
             break;
         case 2:
             help();
@@ -125,7 +134,37 @@ void help(){
         putChar("\n");
     }
 }
-/*
+
+int getArgument(){
+    int i = 0;
+    for(i ; buffer[i] != ' ' ; i++);
+    for(i ; buffer[i] == ' ' ; i++);
+    return hexaString_to_int(buffer + i);
+}
+
+
+int hexaString_to_int(char* str)
+{
+    // Initialize result
+    int res = 0;
+
+    // Iterate through all characters
+    // of input string and update result
+    for (int i = 0; str[i] != '\0'; ++i){
+        if(str[i] >= 'A' && str[i] <= 'F'){
+            res = res * 16 + str[i] - 'A' + 10;
+        }
+        else if(str[i] >= 'a' && str[i] <= 'f'){
+            res = res * 16 + str[i] - 'a' + 10;
+        }
+        else
+            res = res * 16 + str[i] - '0';
+    }
+
+    // return result.
+    return res;
+}
+
 void printmem(int address){
 
     unsigned char * mem = address;
@@ -152,27 +191,6 @@ void printHexa(unsigned char hexa){
     
 }
 
-int hexaString_to_int(char* str) 
-{ 
-    // Initialize result 
-    int res = 0; 
-  
-    // Iterate through all characters 
-    // of input string and update result 
-    for (int i = 0; str[i] != '\0'; ++i){
-        if(str[i] >= 'A' && str[i] <= 'F'){ 
-            res = res * 16 + str[i] - 'A' + 10;
-        }
-        else if(str[i] >= 'a' && str[i] <= 'f'){
-         res = res * 16 + str[i] - 'a' + 10;
-        }
-        else
-            res = res * 16 + str[i] - '0'; 
-    }
-  
-    // return result. 
-    return res; 
-} 
 
 
 
