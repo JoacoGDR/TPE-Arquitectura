@@ -47,7 +47,18 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 				//}
 			}
 			break;
-		} 
+		}
+		case 2:{
+			switch(file_descriptor){
+				case STD_OUTPUT:{
+					drawString("Imprimiendo informacion de los registros: \n",0xfffff,0x0000);
+					printRegs(); //hay que hacerlo. 
+				break;
+				}
+
+			}
+			break;
+		}
 	}
 }
 

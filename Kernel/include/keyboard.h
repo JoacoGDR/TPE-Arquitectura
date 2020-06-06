@@ -98,5 +98,4 @@ static char map_caps[] = { '\0', '\0'/*esc*/, '1', '2', '3', '4', '5', '6', '7',
 
 char get_keyboard_buffer();
 int keyboard_buffer_is_empty();
-
 #endif

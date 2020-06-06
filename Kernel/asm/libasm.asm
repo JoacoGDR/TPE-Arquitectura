@@ -1,6 +1,6 @@
 GLOBAL cpuVendor
 GLOBAL getKey
-
+GLOBAL saveRegisters
 section .text
 	
 cpuVendor:
@@ -54,3 +54,4 @@ loop:
 	mov rsp, rbp
 	pop rbp
 	ret
+

@@ -8,6 +8,8 @@ GLOBAL picSlaveMask
 GLOBAL haltcpu
 GLOBAL _hlt
 
+GLOBAL pancho
+
 ;GLOBAL _drawSquareHandler
 GLOBAL _systemCallsHandler
 GLOBAL _initVideoDriver
@@ -19,7 +21,8 @@ GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
 
-;GLOBAL _exception0Handler
+GLOBAL _exception0Handler
+GLOBAL _exception6Handler
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
@@ -69,6 +72,7 @@ SECTION .text
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
+	mov rsi, rsp
 	call irqDispatcher
 
 	; signal pic EOI (End of Interrupt)
@@ -80,15 +84,26 @@ SECTION .text
 %endmacro
 
 
-
+;Si esto lo dejamos asi, entonces va a volver al div 0, y entra en loop
+;Entonces deberiamos cambiar el RIP
 %macro exceptionHandler 1
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
+	mov rsi, rsp ; segundo parametro le paso el stack pointer
 	call exceptionDispatcher
 
+
+
 	popState
-	iretq
+
+	mov rdi, [pancho]
+	mov qword [rsp] , rdi
+
+;	mov [rip], savedRIP idea santi
+
+
+	iretq   
 %endmacro
 
 
@@ -220,6 +235,10 @@ _irq05Handler:
 _exception0Handler:
 	exceptionHandler 0
 
+;Invalid Opcode Exception
+_exception6Handler:
+	exceptionHandler 6
+
 haltcpu:
 	cli
 	hlt
@@ -229,3 +248,4 @@ haltcpu:
 
 SECTION .bss
 	aux resq 1
+	pancho resq 1

@@ -4,12 +4,14 @@
 #include <moduleLoader.h>
 #include <naiveConsole.h>
 
-
+#include <registers.h>
 #include <screen_driver.h>
 
 
 void load_idt();
 void init_VM_Driver();
+
+extern uint64_t pancho; 
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -89,14 +91,14 @@ void * initializeKernelBinary()
 
 int main()
 {	
-	
 	load_idt();
 	
 	//drawCharInSpecificSpot(500, 500, 'k', 10, 0x000000, 0xFFFFFF);
 	//Este while(1) lo habiamos hecho con Nacho, porque cuando saliamos del Kernel, las interrupciones tipo TimerTick
 	//dejaban de funcionar. Entonces de esta forma pensamos que bueno, el kernel nunca dejara de correr y por ende todo funcionara "bien"
 	//while(1){	
-		((EntryPoint)sampleCodeModuleAddress)(); //Con esto me voy al _start de userland/samplecodemodule
+	pancho = (uint64_t)sampleCodeModuleAddress;
+	((EntryPoint)sampleCodeModuleAddress)(); //Con esto me voy al _start de userland/samplecodemodule
 	//}
 	return 0;
 }

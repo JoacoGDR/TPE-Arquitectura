@@ -22,6 +22,7 @@ void inforeg();
 void printHexa(unsigned char h);
 int getArgument();
 int hexaString_to_int(char* str);
+extern void execute_opcode();
 
 
 void start_shell(/*int width, int height*/){
@@ -33,7 +34,7 @@ void start_shell(/*int width, int height*/){
     shell_main();
 
 }
-//Problema actual: si borro despues al apretar enter, me tira con las letras borradas...
+
 void shell_main(){
 	char * c;
 	while(1){
@@ -111,6 +112,7 @@ int strcmp(char * str1, char*str2){
 
 
 void executeCommand(int id){
+    int c;
     switch(id){
         case 0:
             inforeg();
@@ -124,6 +126,12 @@ void executeCommand(int id){
         case 2:
             help();
             break;
+        case 3:
+            c = 5/0; //intento dividir por 0
+            break;
+        case 4:
+           execute_opcode();
+           break;
     }
 }
 

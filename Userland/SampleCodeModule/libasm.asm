@@ -7,7 +7,13 @@ GLOBAL inforeg
 GLOBAL get_temp
 GLOBAL get_brand
 
+GLOBAL execute_opcode
 section .text
+
+
+
+execute_opcode:
+    UD2
 
 start_VM_Driver:
 	push rbp
@@ -94,295 +100,25 @@ mov eax, 80000002h
 
 inforeg:
     push rbp
-    mov rbp,rsp
-    push rdi
-    push rsi
+    mov rbp, rsp 
     push rax
     push rbx
-
-    ;;RAX;; distinto porque ya vengo con el numero.
-    push rbx
-    push rdi
-
-    mov rdi, srax
-    call syscall_write
-
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;RBX;;
-    push rbx
-    push rdi
-
-    mov rdi, srbx
-    call syscall_write
-
-    mov rax, rbx
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;RCX;;
-    push rbx
-    push rdi
-
-    mov rdi, srcx
-    call syscall_write
-
-    mov rax, rcx
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;RDX;;
-    push rbx
-    push rdi
-
-    mov rdi, srdx
-    call syscall_write
-
-    mov rax, rdx
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;RSI;;
-    push rbx
-    push rdi
-
-    mov rdi, srsi
-    call syscall_write
-
-    mov rax, rsi
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;RDI;;
-    push rbx
-    push rdi
-
-    mov rdi, srdi
-    call syscall_write
-
-    mov rax, rdi
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;RBP;;
-    push rbx
-    push rdi
-
-    mov rdi, srbp
-    call syscall_write
-
-    mov rax, rbp
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;RSP;;
-    push rbx
-    push rdi
-
-    mov rdi, srsp
-    call syscall_write
-
-    mov rax, rsp
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
+    push rcx
+    push rdx
     
-    ;;R8;;
-    push rbx
-    push rdi
+    mov rax, 2
+    mov rbx, 1
+    mov rcx, 0 ; no lo uso..
+    mov rdx, 0 ; no lo uso..
+    int 80h
 
-    mov rdi, sr8
-    call syscall_write
-
-    mov rax, r8
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;R9;;
-    push rbx
-    push rdi
-
-    mov rdi, sr9
-    call syscall_write
-
-    mov rax, r9
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;R10;;
-    push rbx
-    push rdi
-
-    mov rdi, sr10
-    call syscall_write
-
-    mov rax, r10
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;R11;;
-    push rbx
-    push rdi
-
-    mov rdi, sr11
-    call syscall_write
-
-    mov rax, r11
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;R12;;
-    push rbx
-    push rdi
-
-    mov rdi, sr12
-    call syscall_write
-
-    mov rax, r12
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;R13;;
-    push rbx
-    push rdi
-
-    mov rdi, sr13
-    call syscall_write
-
-    mov rax, r13
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-    ;;R14;;
-    push rbx
-    push rdi
-
-    mov rdi, sr14
-    call syscall_write
-
-    mov rax, r14
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-
-    ;;R15;;
-    push rbx
-    push rdi
-
-    mov rdi, sr15
-    call syscall_write
-
-    mov rax, r15
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-    pop rdi
-    pop rbx
-
-  
-    
-    
+    pop rdx
+    pop rcx
     pop rbx
     pop rax
-    pop rsi
-    pop rdi
-    mov rsp,rbp
+    mov rsp, rbp
     pop rbp
     ret
-
 
 syscall_write:
     push rbp

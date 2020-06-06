@@ -1,13 +1,17 @@
 #include <keyboard.h>
 #include <video_driver.h>
 #include <screen_driver.h>  // solo para probar los drawString y esos
-
+#include <stdint.h>
 
 #define KEYBOARD_BUFFER_SIZE 100
 
+
+ uint64_t registers[15];
+
+
  int getKey(); 
 void update_keyboard_buffer(char letra);
-
+void saveRegisters();
 char keyboard_buffer[KEYBOARD_BUFFER_SIZE] = {0};
 
 char caps_lock = 0;
@@ -15,11 +19,12 @@ char shift_pressed = 0;
 char ctrl_pressed = 0;
 char alt_pressed = 0;
 char esc_pressed = 0;
+char tab_pressed = 0;
 
 int keyboard_buffer_actual_position = 0;
 
-int keyboard_handler(){
-	char letra = get_letter_code();
+int keyboard_handler(uint64_t * stackPointer){
+	char letra = get_letter_code(stackPointer);
 
 	if(letra == -1){
 		return -1;
@@ -33,7 +38,7 @@ int keyboard_handler(){
 }
 
 // Si es ctrl,shift, etc prendo el flag, y retorno -1. Sino retorno el caracter correspondiente
-char get_letter_code(){
+char get_letter_code(uint64_t * stackPointer){
 	int c = getKey(); //aca obtengo el codigo de la letra
 	/* while(c>=0x81) {
 	 	c = getKey();   // este while es para filtrar los break code
@@ -43,20 +48,26 @@ char get_letter_code(){
 	switch(c){
 		case L_SHIFT:
 		case R_SHIFT:
-				shift_pressed = 1;return -1;			
+				shift_pressed = 1;
+				return -1;			
 		case L_SHIFT_RELEASED:
 		case R_SHIFT_RELEASED:
-				shift_pressed = 0;return -1;
+				shift_pressed = 0;
+				return -1;
 
 		case L_CTRL:
-				ctrl_pressed = 1;return -1;
+				ctrl_pressed = 1;
+				return -1;
 		case L_CTRL_RELEASED:
-				ctrl_pressed = 0;return -1;
+				ctrl_pressed = 0;
+				return -1;
 
 		case L_ALT:
-				alt_pressed = 1;return -1;
+				alt_pressed = 1;
+				return -1;
 		case L_ALT_RELEASED:
-				alt_pressed = 0;return -1;
+				alt_pressed = 0;
+				return -1;
 
 		case CAPSLOCK:
 				if(caps_lock == 0){
@@ -66,15 +77,25 @@ char get_letter_code(){
 					}
 					return -1;
 		case ESC:
-				esc_pressed = 1;return -1;
+				esc_pressed = 1;
+				return -1;
 		case ESC_RELEASED:
-				esc_pressed = 0;return -1;
+				esc_pressed = 0;
+				return -1;
+
+		case TAB:
+				tab_pressed = 1;
+				saveRegisters(stackPointer);
+				drawString("Registros guardados!\n",0xffff,0x3333); 
+				return -1;
+		case TAB_RELEASED:
+				tab_pressed = 0;
+				return -1;
 
 		case DOWN:
 		case UP:
 		case LEFT:
 		case RIGHT:
-		case TAB:
 			return -1;
 
 		//Si no es ninguna tecla especial, entonces debe ser una letra/numero/signo
@@ -143,4 +164,35 @@ int isLetra(int n){
 	if(n >= 0x2C &&  n <= 0x32)
 		return 1;
 	return 0;
+}
+
+
+
+void saveRegisters(uint64_t * stackPointer){
+	
+	for(int i= 0; i<15;i++){
+		registers[i] = stackPointer[i];
+	}
+}
+
+void printRegs(){
+	
+
+	 char* regs[]= {"RAX: ","RBX: ","RCX: ",
+	 "RDX: ","RBP: ","RDI: ","RSI: ","R8: ","R9: ",
+	 "R10: ","R11: ","R12: ","R13: ","R14: ","R15: "};
+
+	 /*
+	 stack frame tiene la direccion del
+	 r15. adelante esta r14 y asi sucesivamente. uno antes de r15 esta la direccion
+	 de retorno de la handler que seria el rip.
+	 */
+
+	 uint64_t j=0;
+	for (j=0; j<15; j++){
+		drawChar2('\n', 0xffffff, 0x000000);
+		drawString(regs[14-j], 0xffffff, 0x000000);
+		
+		putHexa(registers[j]);
+	}
 }
