@@ -98,6 +98,11 @@ mov eax, 80000002h
 
 
 
+
+
+
+
+
 inforeg:
     push rbp
     mov rbp, rsp 
@@ -147,15 +152,27 @@ syscall_write:
     ret
 
 
+
+
+
 get_temp:
     push rbp
     mov rbp, rsp
     push rdi
     push rbx
     push rax
+    push rdx
+    push rcx
 
-    mov rax, 1a2h
-    rdmsr
+    mov rdx, [1A2h] ;en este registro saco los bits 23 a 16
+    and rdx, 0xFF0000
+    sar rdx, 16
+    mov rcx, [19Ch] ;en este registro saco los bits 22 a 16
+    and rcx, 0x7F0000
+    sar rcx, 16
+
+    sub rdx, rcx
+    mov rax, rdx
     mov rbx, numstr
     call num_to_str
     mov rdi, rax ;primero imprimo rax
@@ -163,18 +180,8 @@ get_temp:
     mov rdi, ntr
     call syscall_write
 
-
-    mov rax, 19ch
-     rdmsr
-    mov rbx, numstr
-    call num_to_str
-    mov rdi, rax ;primero imprimo rax
-    call syscall_write
-    mov rdi, ntr
-    call syscall_write
-
-
-
+    pop rcx
+    pop rdx
     pop rax
     pop rbx
     pop rdi
@@ -185,33 +192,6 @@ get_temp:
 
 
 
-
-
-
-;get_temp:
-;    push rbp
-;      mov rbp, rsp
-;    push rdi
-;    push rbx
-;    push rax
-
- ;   mov rdi, temp
- ;   call syscall_write
- ;   mov rax, [0x19C]
- ;   mov rbx, numstr
- ;   call num_to_str
- ;   mov rdi, rax ;primero imprimo rax
- ;   call syscall_write
- ;   mov rdi, ntr
- ;   call syscall_write
-
- ;   pop rax
- ;   pop rbx
- ;   pop rdi
- ;   mov rsp,rbp
- ;   pop rbp
- ;   ;IA32_THERM_Status MSR_TEMEPRATURE_TARGET
-    
 syscall_read:
     push rbp
     mov rbp, rsp 

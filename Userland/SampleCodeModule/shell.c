@@ -111,29 +111,7 @@ int strcmp(char * str1, char*str2){
 
 
 
-void executeCommand(int id){
-    int c;
-    switch(id){
-        case 0:
-            inforeg();
-            break;
-        case 1:
-            syscall_write("");
-            int arg = getArgument();
-            printmem(arg);
-            syscall_write("\n");
-            break;
-        case 2:
-            help();
-            break;
-        case 3:
-            c = 5/0; //intento dividir por 0
-            break;
-        case 4:
-           execute_opcode();
-           break;
-    }
-}
+
 
 void help(){
     for(int i = 0; i < NUMBER_OF_COMMANDS; i++){
@@ -200,7 +178,38 @@ void printHexa(unsigned char hexa){
 }
 
 
+void get_time(){
+    char time[] = {0, 0, ':', 0, 0, ':', 0, 0};
+    syscall_read(3, time, 6);
+    syscall_write(time);
+}
 
+void executeCommand(int id){
+    int c;
+    switch(id){
+        case 0:
+            inforeg();
+            break;
+        case 1:
+            syscall_write("");
+            int arg = getArgument();
+            printmem(arg);
+            syscall_write("\n");
+            break;
+        case 2:
+            help();
+            break;
+        case 3:
+            c = 5/0; //intento dividir por 0
+            break;
+        case 4:
+           execute_opcode();
+           break;
+        case 5:
+            get_time();
+            break;
+    }
+}
 
 /*
 int getArgument(){

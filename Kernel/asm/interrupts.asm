@@ -69,6 +69,10 @@ SECTION .text
 %endmacro
 
 %macro irqHandlerMaster 1
+	;mov rax, 257
+	mov rbx, 251
+	mov rcx, 257
+	mov r9, 257
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro

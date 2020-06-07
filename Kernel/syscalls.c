@@ -8,9 +8,9 @@
 /*char get_keyboard_buffer();
 int keyboard_buffer_is_empty();*/
 
-//extern int segundos();
-//extern int minutos();
-//extern int horas();
+extern int seconds();
+extern int minutes();
+extern int hours();
 
 void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 	char aux2;
@@ -36,15 +36,15 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 					}
 					break;
 				}
-				//case TIMER:{
-				//	int seg = segundos();
-				//	int min = minutos();
-				//	int hora = horas();
-				//	string[0]=hora/10 + 0x30; string[1]=hora%10 + 0x30;
-				//	string[3]=min/10 + 0x30; string[4]=min%10 + 0x30;
-				//	string[6]=seg/10 + 0x30; string[7]=seg%10 + 0x30;
-				//	break;
-				//}
+				case TIMER:{
+					int sec = seconds();
+					int min = minutes();
+					int hour = hours();
+					string[0]=hour/10 + 0x30; string[1]=hour%10 + 0x30;
+					string[3]=min/10 + 0x30; string[4]=min%10 + 0x30;
+					string[6]=sec/10 + 0x30; string[7]=sec%10 + 0x30;
+					break;
+				}
 			}
 			break;
 		}
