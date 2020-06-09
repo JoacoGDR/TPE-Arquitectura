@@ -1,7 +1,6 @@
-extern void syscall_read(int, char*, int);
-extern void syscall_write(char *);
+#include "syscalls.h"
+#include "getChar.h"
 
-void putchar(char * c);
 
 char getChar() {
     char resp;
@@ -13,8 +12,6 @@ void putChar(char * c){
     syscall_write(c);
 }
 
-void print(char * string){
-    while(*string){
-        putChar(*string); 
-    }
+void printf(char * string){
+    syscall_write(string);
 }

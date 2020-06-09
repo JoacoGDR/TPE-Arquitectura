@@ -65,11 +65,6 @@ void exceptionDispatcher(int exception, uint64_t *stackPointer) {
 	printRegisters(stackPointer);
 }
 
-/*static void zero_division(uint64_t *stackPointer) {
-	drawString("DIVISION POR CERO", 0x000000, 0xffffff);
-
-	
-}*/
 
 
 //pasar de uint64_t a hexa y de ahi imprmir en pantalla

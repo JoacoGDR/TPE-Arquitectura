@@ -101,6 +101,11 @@ char get_letter_code(uint64_t * stackPointer){
 		//Si no es ninguna tecla especial, entonces debe ser una letra/numero/signo
 		default:
 			if (c > 0  &&  c < len  &&  map[c]!='\0'){
+
+				if(ctrl_pressed == 1 && map[c] == 'v'){
+					return -2;
+				}
+
 				if(shift_pressed == 0){
 					if(caps_lock == 0){
 						//Busco en la tabla en minuscula:

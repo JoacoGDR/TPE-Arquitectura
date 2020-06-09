@@ -13,7 +13,7 @@ GLOBAL pancho
 ;GLOBAL _drawSquareHandler
 GLOBAL _systemCallsHandler
 GLOBAL _initVideoDriver
-GLOBAL init_VM_Driver_END
+
 GLOBAL _irq00Handler
 GLOBAL _irq01Handler
 GLOBAL _irq02Handler
@@ -70,9 +70,9 @@ SECTION .text
 
 %macro irqHandlerMaster 1
 	;mov rax, 257
-	mov rbx, 251
-	mov rcx, 257
-	mov r9, 257
+	;mov rbx, 251
+	;mov rcx, 257
+	;mov r9, 257
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
@@ -104,7 +104,7 @@ SECTION .text
 	mov rdi, [pancho]
 	mov qword [rsp] , rdi
 
-;	mov [rip], savedRIP idea santi
+
 
 
 	iretq   
@@ -171,8 +171,6 @@ _initVideoDriver:
 	push rcx
 	push rdx
 	push rbp
-	;push rdi  ; esto habria que comantarlooo
-	;push rsi  ; esto tambiennn
 	push r8
 	push r9
 	push r10
@@ -181,6 +179,7 @@ _initVideoDriver:
 	push r13
 	push r14
 	push r15
+	mov rdi, 1
 	call init_VM_Driver
 	pop r15
 	pop r14
@@ -190,8 +189,6 @@ _initVideoDriver:
 	pop r10
 	pop r9
 	pop r8
-;	pop rsi   ;Porque aca se retornan valores de height y width 
-;	pop rdi    ;
 	pop rbp
 	pop rdx
 	pop rcx
@@ -199,16 +196,6 @@ _initVideoDriver:
 	pop rax
 	ret
 
-init_VM_Driver_END:
-	push rbp
-	mov rbp, rsp
-
-	mov rdi, rdi  ; screen width
-	mov rsi, rsi  ; screen height
-
-	mov rsp, rbp
-	pop rbp
-	ret
 
 ;8254 Timer (Timer Tick)
 _irq00Handler:

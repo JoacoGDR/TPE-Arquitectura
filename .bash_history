@@ -1,209 +1,6 @@
 make all
 exit
 cd root/
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make clean
-make all
-./run.sh 
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-make all
-make all
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
 make clean
 make all
 exit
@@ -496,5 +293,208 @@ exit
 cd root/
 make clean
 make all
+make all
+exit
+cd root/
+make clean
+make all
+make all
+make all
+make all
+make all
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+make all
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+make all
+make all
+exit
+cd root/
+make all
+make all
+exit
+cd root/
+make clean
+make all
+make all
+make all
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exxit
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd ro
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+make all
+exit
+cd root/
+make clear
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+exit
+cd root/
+make all
+exit
+cd root/
+make all
+exit
+cd root/
 make all
 exit

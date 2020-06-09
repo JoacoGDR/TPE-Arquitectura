@@ -10,8 +10,7 @@
 *	Entonces de esta forma no estamos llamando directamente funciones del kernel asi como asi.
 *
 */
-extern void start_VM_Driver(); //Se encuentra en libasm.asm (de userland)
-extern void syscall_write(char *);
+extern void start_VM_Driver(int screenId); //Se encuentra en libasm.asm (de userland)
 void putchar(char * c);
 char getChar();
 void start_shell();
@@ -20,6 +19,7 @@ int do_intel(void);
 int do_amd(void);
 void printregs(int eax, int ebx, int ecx, int edx);
 void getCpuID();
+void calculator_main();
 
 
 extern void get_brand();
@@ -28,9 +28,10 @@ int main() {
 	// init_VM_Driver(); Esta es una funcion de Kernel, no deberia llamarla desde aca
 
 	syscall_write("");
-	start_VM_Driver();
+	int screenId = 1;
+	start_VM_Driver(screenId);
 								//	get_brand();
-	get_temp();
+//	get_temp();
 	//getCpuID();
 	//detect_cpu();
 	//syscall_write("hol");
@@ -39,6 +40,7 @@ int main() {
 	//char * c;
 	
 	start_shell();
+	//calculator_main();
 
 
 		

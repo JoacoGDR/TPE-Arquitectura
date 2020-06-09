@@ -1,0 +1,13 @@
+int isParenthesisRight(char c);
+int isParenthesisLeft(char c);
+int isValid(char c);
+char * intToString(int n);
+void print_answer(double n);
+int isDigit(int c);
+void get_expression();
+void calculator_main();
+double calculate();
+void pushToOperatorStack(char op);
+void pushToNumStack(double n);
+char popOperatorStack();
+double popNumStack();

@@ -1,8 +1,11 @@
 #include "shell.h"
+#include "calculator.h"
+#include "getChar.h"
 
 
 
-#define SCREEN_LIMIT 120
+#define SCREEN_LIMIT 160
+#define CHANGE_WINDOW -2
 
 
 int screen_width;
@@ -23,13 +26,14 @@ void printHexa(unsigned char h);
 int getArgument();
 int hexaString_to_int(char* str);
 extern void execute_opcode();
+void printf(char * s);
 
 
 void start_shell(/*int width, int height*/){
     //screen_width = width;
    // screen_height = height;
     
-    syscall_write(">>");
+    printf(">>");
 
     shell_main();
 
@@ -38,43 +42,48 @@ void start_shell(/*int width, int height*/){
 void shell_main(){
 	char * c;
 	while(1){
-		//syscall_write(getChar());
+		//printf(getChar());
 	    c = getChar();
-		if(c != -1){
-            if(c == '\b'){
-                if(buffer_size != 0){
+        if(c == CHANGE_WINDOW){
+          //  syscall_change();
+         // calculator_main();    //el stack va a explotar y lo sabemos todos
+        }
+
+		else if(c != -1){
+                if(c == '\b'){
+                    if(buffer_size != 0){
+                        buffer[buffer_size] = '\0';
+                        buffer_size--;   
+                        putChar(&c);
+
+                    }
+                }
+                else if(c=='\n'){
+                
                     buffer[buffer_size] = '\0';
-                    buffer_size--;   
-                     putChar(&c);
-
-                }
-            }
-            else if(c=='\n'){
-            
-                buffer[buffer_size] = '\0';
-                
-                putChar(&c); //tiro un enter y despues me fijo de printear lo que sigue, pasaba que ponia todo junto y despues largaba un enter.
-
-                //los commands se guardan en un arreglo, entonces nos devuelve la posicion de dicho command QUE QUERES?!
-                int command = getCommand();
-                if(command != -1){
-                    executeCommand(command);
                     
-                }else
-                {
-                    syscall_write("Command not found\n");
+                    putChar(&c); //tiro un enter y despues me fijo de printear lo que sigue, pasaba que ponia todo junto y despues largaba un enter.
+
+                    //los commands se guardan en un arreglo, entonces nos devuelve la posicion de dicho command QUE QUERES?!
+                    int command = getCommand();
+                    if(command != -1){
+                        executeCommand(command);
+                        
+                    }else
+                    {
+                        printf("Command not found\n");
+                    }
+                    buffer_size = 0; 
+                    printf(">>");
+                    
+                    
                 }
-                buffer_size = 0; 
-                 syscall_write(">>");
-                
-                
-            }
-            else if(buffer_size < SCREEN_LIMIT){
-                buffer[buffer_size] = c;
-                buffer_size++;
-                 putChar(&c);
-            }
-            //putChar(&c); este no lo uso y lo pongo en todos salvo el enter por que? -> porque sino cuando hago un enter, me lo tira y el ">>" queda volando y ta todo mal.
+                else if(buffer_size < SCREEN_LIMIT){
+                    buffer[buffer_size] = c;
+                    buffer_size++;
+                    putChar(&c);
+                }
+                //putChar(&c); este no lo uso y lo pongo en todos salvo el enter por que? -> porque sino cuando hago un enter, me lo tira y el ">>" queda volando y ta todo mal.
            
         }
  
@@ -115,8 +124,8 @@ int strcmp(char * str1, char*str2){
 
 void help(){
     for(int i = 0; i < NUMBER_OF_COMMANDS; i++){
-        syscall_write(commands[i]);
-        syscall_write(descriptions[i]);
+        printf(commands[i]);
+        printf(descriptions[i]);
         putChar("\n");
     }
 }
@@ -172,16 +181,17 @@ void printHexa(unsigned char hexa){
             resp[i]+='A' - 10;
          }
      }
-     syscall_write(resp);
+     printf(resp);
     
     
 }
 
 
 void get_time(){
-    char time[] = {0, 0, ':', 0, 0, ':', 0, 0};
+    char time[] = {0, 0, ':', 0, 0, ':', 0, 0, '\0'};
     syscall_read(3, time, 6);
-    syscall_write(time);
+    printf(time);
+    printf("\n");
 }
 
 void executeCommand(int id){
@@ -191,10 +201,10 @@ void executeCommand(int id){
             inforeg();
             break;
         case 1:
-            syscall_write("");
+            printf("");
             int arg = getArgument();
             printmem(arg);
-            syscall_write("\n");
+            printf("\n");
             break;
         case 2:
             help();
@@ -207,6 +217,9 @@ void executeCommand(int id){
            break;
         case 5:
             get_time();
+            break;
+        case 6:
+            get_temp();
             break;
     }
 }

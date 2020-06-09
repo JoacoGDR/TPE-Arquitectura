@@ -1,9 +1,15 @@
 #include <screen_driver.h>
 #include <keyboard.h>
 
+
 #define STD_OUTPUT 1  // salida por pantalla
 #define STD_INPUT 2
 #define TIMER 3
+
+#define READ 3
+#define WRITE 4
+#define CLEAR_VIEW 6
+#define REGISTERS 2
 
 /*char get_keyboard_buffer();
 int keyboard_buffer_is_empty();*/
@@ -12,15 +18,17 @@ extern int seconds();
 extern int minutes();
 extern int hours();
 
-void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
+void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){ 
 	char aux2;
 	int aux;
 	switch(ID){
 		
+		case CLEAR_VIEW:{
+			//clearScreenDisplay();break;
+		}
 
 
-
-		case 4:{
+		case WRITE:{
 			switch(file_descriptor){
 				case STD_OUTPUT:{
 					drawString(string, 0xFFFFFF, 0x000000); 
@@ -29,7 +37,7 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 			}
 			break;
 		}
-		case 3:{
+		case READ:{
 			aux = keyboard_handler(); 
 			switch(file_descriptor) {
 				case STD_INPUT:{
@@ -53,7 +61,7 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 			}
 			break;
 		}
-		case 2:{
+		case REGISTERS:{
 			switch(file_descriptor){
 				case STD_OUTPUT:{
 					drawString("Imprimiendo informacion de los registros: \n",0xfffff,0x0000);

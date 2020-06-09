@@ -3,6 +3,7 @@
 GLOBAL start_VM_Driver
 GLOBAL syscall_read
 GLOBAL syscall_write
+GLOBAL syscall_clearView
 GLOBAL inforeg
 GLOBAL get_temp
 GLOBAL get_brand
@@ -139,7 +140,7 @@ syscall_write:
 
     mov rax, 4
     mov rbx, 1
-    mov rcx, rsi ; le paso el string
+    mov rcx, rdi ; le paso el string
     mov rdx, 0 ; no se usa..
     int 80h
 
@@ -151,7 +152,31 @@ syscall_write:
     pop rbp
     ret
 
+syscall_clearView: 
+    push rbp
+    mov rbp, rsp 
+    push rax
+    push rbx
+    push rcx
+    push rdx
+    mov rax, 0
+    mov rbx, 0
+    mov rcx, 0
+    mov rdx, 0
 
+    mov rax, 6
+    mov rbx, 1
+    mov rcx, 0 ; no se usa
+    mov rdx, 0 ; no se usa..
+    int 80h
+
+    pop rdx
+    pop rcx
+    pop rbx
+    pop rax
+    mov rsp, rbp
+    pop rbp
+    ret
 
 
 
