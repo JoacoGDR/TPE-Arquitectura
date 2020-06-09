@@ -1,12 +1,3 @@
-make clean
-make all
-exit
-cd root/
-make clean
-make all
-exit
-cd root/
-make clean
 make all
 exit
 cd root/
@@ -498,3 +489,12 @@ make all
 make all
 make all
 make all
+cd root/
+make clean
+make all
+exit
+cd root/
+make clean
+make all
+make all
+exit

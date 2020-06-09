@@ -19,7 +19,7 @@ start_VM_Driver:
 	push rbp
 	mov rbp, rsp
 	int 0x82
-	mov [rdx], rax		;por que esto? era por el tp anterior para mandarle al start_shell()   era rax y rbx
+	mov [rdx], rax		;por que esto? era por el tp anterior para mandarle al start_shell()   era rax y rbx VER DE SACAR ESTO Y LA DE ABAJO!!!
 	mov [rdx + 4], rbx	;los tamanios de la pantalla creo
 	mov rax, rdx
 	mov rsp, rbp
@@ -114,7 +114,7 @@ inforeg:
     mov rax, 2
     mov rbx, 1
     mov rcx, 0 ; no lo uso..
-    mov rdx, 0 ; no lo uso..
+    mov rdx, 0 ; no lo uso.. 
     int 80h
 
     pop rdx
@@ -139,7 +139,7 @@ syscall_write:
 
     mov rax, 4
     mov rbx, 1
-    mov rcx, rdi ; le paso el string
+    mov rcx, rsi ; le paso el string
     mov rdx, 0 ; no se usa..
     int 80h
 
