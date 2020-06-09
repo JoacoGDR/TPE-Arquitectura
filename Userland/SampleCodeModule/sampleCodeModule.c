@@ -22,6 +22,7 @@ void getCpuID();
 void calculator_main();
 
 
+
 extern void get_brand();
 
 int main() {
@@ -34,7 +35,9 @@ int main() {
 	syscall_write("CTRL+1: TERMINAL\n");
 	syscall_write("CTRL+2: CALCULATOR\n");
 	syscall_write("The terminal will be initiated first.\n");
+	
 	start_shell();
+
 	
 	
 	

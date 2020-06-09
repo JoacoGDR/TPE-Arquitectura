@@ -4,6 +4,7 @@
 
 
 
+
 #define SCREEN_LIMIT 160
 #define CHANGE_WINDOW -2
 
@@ -13,7 +14,7 @@ int screen_height;
 char buffer[SCREEN_LIMIT] = {'\0'};
 int buffer_size = 0;
 
-
+extern void start_VM_Driver(int screenId);
 int strcmp();
 char getChar();
 void putChar(char * c);
@@ -46,7 +47,7 @@ void shell_main(){
 	    c = getChar();
         if(c == CHANGE_WINDOW){
             
-            printf("HOLA!\n");
+            start_VM_Driver(1);
             calculator_main();
             
         }

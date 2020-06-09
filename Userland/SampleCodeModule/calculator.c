@@ -45,7 +45,7 @@ char popOperatorStack();
 void popNumStack (double * popped);
 */
 
-extern void start_VM_driver(int screen);
+int start_VM_driver(int screen);
 int error_produced = 0;
 
 char calc_buffer[EQUATION_LENGTH] = {'0'};
@@ -100,11 +100,11 @@ void calculator_main(){
 
     //HACERLA: se me ocurre hacer una nueva syscall_clean ponele que va a llamar a clearVideoDisplay().
     // limpiar_ventana(); ={"\0"};//para "borrar" todo lo que habia impreso la terminal y asi tener la calculadora
-    start_VM_driver(1);
+    //start_VM_driver(1);
      os.size = 0;
      ns.size = 0;
 
-
+    //start_VM_driver(1);
     printf("CALCULADORA\n---------------------------------------------\n\n");
     printf("Ingrese la operacion que desea\n Solo se aceptan numeros reales, +, -, *, /, (, )\n Cualquier otra expresion no sera admitida\nPresione = al terminar\n\n");
 

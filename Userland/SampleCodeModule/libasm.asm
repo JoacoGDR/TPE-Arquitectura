@@ -20,14 +20,24 @@ execute_opcode:
 start_VM_Driver:
 	push rbp
 	mov rbp, rsp
+    push rax
+    mov rax, rdi
 	int 0x82
 	;mov [rdx], rax		;por que esto? era por el tp anterior para mandarle al start_shell()   era rax y rbx VER DE SACAR ESTO Y LA DE ABAJO!!!
 	;mov [rdx + 4], rbx	;los tamanios de la pantalla creo
 	;mov rax, rdx
+    pop rax
 	mov rsp, rbp
 	pop rbp 
 	ret
 
+change_screen:
+    push rbp
+    mov rbp, rsp
+    int 0x80
+    mov rsp, rbp
+    pop rbp
+    ret
 
 
 get_brand:
