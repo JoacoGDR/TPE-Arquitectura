@@ -47,6 +47,7 @@ char get_letter_code(uint64_t * stackPointer){
  
 	switch(c){
 		case L_SHIFT:
+				return -2;
 		case R_SHIFT:
 				shift_pressed = 1;
 				return -1;			
@@ -102,8 +103,13 @@ char get_letter_code(uint64_t * stackPointer){
 		default:
 			if (c > 0  &&  c < len  &&  map[c]!='\0'){
 
-				if(ctrl_pressed == 1 && map[c] == 'v'){
-					return -2;
+				if(ctrl_pressed == 1) {
+					if(map[c] == '2')
+						return -2;
+					if(map[c]== '1'){
+						return -3;
+					}
+					
 				}
 
 				if(shift_pressed == 0){

@@ -42,11 +42,13 @@ void start_shell(/*int width, int height*/){
 void shell_main(){
 	char * c;
 	while(1){
-		//printf(getChar());
+
 	    c = getChar();
         if(c == CHANGE_WINDOW){
-          //  syscall_change();
-         // calculator_main();    //el stack va a explotar y lo sabemos todos
+            
+            printf("HOLA!\n");
+            calculator_main();
+            
         }
 
 		else if(c != -1){

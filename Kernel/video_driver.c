@@ -56,7 +56,7 @@ void init_VM_Driver(int screenId) {
 	SCREEN_WIDTH = screenData->width;
 	//drawPixel(100, 100, 0x555555);
 	
-	init_screen_driver(SCREEN_WIDTH, SCREEN_HEIGHT, 1);
+	init_screen_driver(SCREEN_WIDTH, SCREEN_HEIGHT, screenId);
 	 
 	//give_screen_parameters(SCREEN_WIDTH, SCREEN_HEIGHT);
 	//init_VM_Driver_END(SCREEN_WIDTH, SCREEN_HEIGHT);

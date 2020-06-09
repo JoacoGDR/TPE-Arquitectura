@@ -38,15 +38,18 @@ int screenId;
 void init_screen_driver(unsigned int width, unsigned int height,unsigned int Id) {
 	screen_pixel_height = height; // viene con 768
 	screen_pixel_width = width;   // viene con 1024
+	
+	screenId = Id;
 
 	for(int j = 0; j<height; j++){
 		drawPixel(WALL*(CHAR_WIDTH) - Id,j,0x33333);
 	}
+	drawString("hohola",0x333,0x000);
 
 	current_y = SCREEN_CHAR_HEIGHT - 1;
 	current_x = WALL*screenId;
 
-	screenId = Id;
+	
 
  	pixelX = screenId*WALL*CHAR_WIDTH;  							
 	pixelY = screen_pixel_height - CHAR_HEIGHT; 

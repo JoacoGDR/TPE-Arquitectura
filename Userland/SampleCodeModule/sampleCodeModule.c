@@ -25,31 +25,16 @@ void calculator_main();
 extern void get_brand();
 
 int main() {
-	// init_VM_Driver(); Esta es una funcion de Kernel, no deberia llamarla desde aca
 
 	syscall_write("");
-	int screenId = 1;
-	start_VM_Driver(screenId);
-								//	get_brand();
-//	get_temp();
-	//getCpuID();
-	//detect_cpu();
-	//syscall_write("hol");
-	//syscall_write("\b");
 
-	//char * c;
-	
+	start_VM_Driver(0);
+
+	syscall_write("Welcome to the Benson OS!\n");
+	syscall_write("CTRL+1: TERMINAL\n");
+	syscall_write("CTRL+2: CALCULATOR\n");
+	syscall_write("The terminal will be initiated first.\n");
 	start_shell();
-	//calculator_main();
-
-
-		
-/*
-		//syscall_write(getChar());
-	    c = getChar();
-		if(c != -1)
-			putChar(&c);
-*/
 	
 	
 	

@@ -1,3 +1,4 @@
+#include "calculator.h"
 #include "shell.h"
 #include "syscalls.h"
 #include "getChar.h"
@@ -27,6 +28,7 @@ typedef struct
     
 }NUM_STACK;
 
+/*
 int isParenthesisRight(char c);
 int isParenthesisLeft(char c);
 int isValid(char c);
@@ -36,13 +38,14 @@ int isDigit(int c);
 int isOperator(char c);
 void get_expression();
 void calculator_main();
-void ccalculate(double * d);
+void calculate(double * d);
 void pushToOperatorStack(char op);
 void pushToNumStack(double n);
 char popOperatorStack();
 void popNumStack (double * popped);
+*/
 
-
+extern void start_VM_driver(int screen);
 int error_produced = 0;
 
 char calc_buffer[EQUATION_LENGTH] = {'0'};
@@ -62,7 +65,7 @@ NUM_STACK ns;
 
 void popNumStack (double * popped) {
     if(ns.size> 0){
-        *popped = ns.stk[--ns.size]; ////////
+        *popped = ns.stk[--ns.size]; 
     }
     else {
         error_produced = SYNTAX_ERROR; //se toma como syntax error ya que si estuviese bien la expresion no puede pasar
@@ -97,7 +100,7 @@ void calculator_main(){
 
     //HACERLA: se me ocurre hacer una nueva syscall_clean ponele que va a llamar a clearVideoDisplay().
     // limpiar_ventana(); ={"\0"};//para "borrar" todo lo que habia impreso la terminal y asi tener la calculadora
-
+    start_VM_driver(1);
      os.size = 0;
      ns.size = 0;
 
@@ -638,7 +641,7 @@ void get_expression(){
 
                 }
             }
-            else if(c == '=' || c == '\n'){
+            else if(c == '=' ){
             
                 calc_buffer[buffer_pos] = '\0';
                 

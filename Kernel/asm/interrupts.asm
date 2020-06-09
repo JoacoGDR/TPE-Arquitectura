@@ -179,7 +179,7 @@ _initVideoDriver:
 	push r13
 	push r14
 	push r15
-	mov rdi, 1
+	mov rdi, rax
 	call init_VM_Driver
 	pop r15
 	pop r14
