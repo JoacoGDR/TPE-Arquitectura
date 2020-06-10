@@ -213,7 +213,7 @@ void printInt(int num){
     }
     int j = 0;
     i--;
-    while(i>0){
+    while(i>=0){
         resp[j++] = aux[i];
         i--;
     }
