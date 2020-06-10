@@ -7,12 +7,7 @@
 #define BLACK 0x000000
 #define WHITE 0xffffff
 
-/*
-static void zero_division();
-void putHexa( uint64_t * value);
-void printBase(uint64_t value, uint64_t base);
-uint64_t uintToBase(uint64_t value, char * buffer, uint64_t base);
-*/
+
 
 //static void zero_division(uint64_t * sp);
 drawString(char * s, int fc, int bc); 
@@ -47,11 +42,7 @@ void printRegisters(uint64_t* stackPointer){
 		
 		putHexa(stackPointer[j]);
 	}
-//	newLine();
-//	putStr("RIP ", colour);
-//	putHexa(stackPointer[j], colour);
-//	newLine();
-// char* regs[]= {"R15 ","R14 ","R13 ","R12 ","R11 ","R10 ","R9 ","R8 ","RSI ","RDI ","RBP ","RDX ","RCX ","RBX ","RAX ", };
+
 }
 
 

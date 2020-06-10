@@ -10,7 +10,6 @@ GLOBAL _hlt
 
 GLOBAL pancho
 
-;GLOBAL _drawSquareHandler
 GLOBAL _systemCallsHandler
 GLOBAL _initVideoDriver
 
@@ -28,7 +27,7 @@ EXTERN irqDispatcher
 EXTERN exceptionDispatcher
 EXTERN syscall_dispatcher
 EXTERN init_VM_Driver
-;EXTERN drawSquare
+
 
 SECTION .text
 
@@ -69,10 +68,7 @@ SECTION .text
 %endmacro
 
 %macro irqHandlerMaster 1
-	;mov rax, 257
-	;mov rbx, 251
-	;mov rcx, 257
-	;mov r9, 257
+	
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
@@ -88,8 +84,6 @@ SECTION .text
 %endmacro
 
 
-;Si esto lo dejamos asi, entonces va a volver al div 0, y entra en loop
-;Entonces deberiamos cambiar el RIP
 %macro exceptionHandler 1
 	pushState
 
@@ -155,16 +149,7 @@ _systemCallsHandler:
 	ret
 
 
-;_drawSquareHandler:
-;	pushState
-;	mov rdi, rax  ; 1st parameter (x position)
-;	mov rsi, rbx  ; 2nd parameter (y position)
-;	mov rdx, rcx  ; 3rd parameter (color)
-;	call drawSquare
-;	popState
-;	ret
-;
-;
+
 _initVideoDriver:
 	push rax
 	push rbx

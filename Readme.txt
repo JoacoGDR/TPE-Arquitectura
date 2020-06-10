@@ -29,3 +29,55 @@ From the x64BareBones project directory run:
 
 Author: Rodrigo Rearden (RowDaBoat)
 Collaborator: Augusto Nizzo McIntosh
+
+# La siguiente guia cubre los pasos necesarios para tener un entorno de trabajo docker tanto en una PC personal como en una PC de los laboratorios de ITBA.
+
+# INSTALAR DOCKER
+
+  # PC PERSONAL (ejemplo para Linux Mint)
+  sudo apt-get install docker.io
+  # Si al intentar ejecutar docker, por ejemplo "docker ps" se obtiene este error
+  # "Got permission denied while trying to connect to the docker daemon socket"
+  # se deben seguir los pasos de este link: https://docs.docker.com/install/linux/linux-postinstall/
+  # tl;dr
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+  # Reiniciar sesión para que los cambios tengan efecto
+  
+  # LAB ITBA
+  # Ya está instalado, pero es necesario seguir los siguientes pasos para poder ejecutar docker
+  Iniciar sesión en archlinux (en los labos bootea por red, sino desde pampero via ssh a alguna pc)
+  sudo /usr/bin/start_docker.sh
+  sudo /usr/bin/enter_docker.sh
+  # Esto debería mostrar un prompt con esta pinta
+  # root@d1:~#
+
+# DESCARGAR IMAGEN
+
+  docker pull agodio/itba-so:1.0
+
+# EJECUTAR EL CONTENEDOR
+
+  docker run -v ${PWD}:/root --security-opt seccomp:unconfined -ti agodio/itba-so:1.0 
+  # Esto debería mostrar un prompt con esta pinta
+  # root@c3285f863835:/#
+
+  # El flag --security-opt seccomp:unconfined quita la restricción a syscalls utilizadas por gdb, strace, ltrace, PVS-studio, etc
+
+  # El flag -v ${PWD}:/root hace un bind-mount de la carpeta actual ($PWD) del host en la carpeta /root del guest, esto permite compartir archivos entre el host y el guest.
+  # ¡CUIDADO! Los archivos NO SE COPIAN, sino que se comparten, es decir que cualquier cambio tanto desde el host como desde el guest se podrá ver en el host y el guest.
+
+    # PC PERSONAL
+    # Una alternativa práctica y segura es cambiar el directorio de trabajo del host al proyecto en el cual se esté trabajando, por ejempo "cd /home/TP1", y luego ejecutar el contenedor, de esta manera en la carpeta /root del contenedor se verán los archivos del TP1
+
+    # LAB ITBA
+    # En los laboratorios se inicia un contenedor con "enter_docker.sh" y dentro de este ejecutamos otro contenedor con "docker run".
+    # El primer contenedor realiza un bind-moutn de la carpeta /lab/tmp -> /shared, por este motivo para poder compartir archivos entre el host y el guest, antes de ejecutar "docker run" es necesario cambiar el directorio de trabajo a /shared y luego ejecutar "docker run"
+    
+    # Si al intentar ejecutar "docker run" se obtiene el siguiente error
+    # "docker: Error response from daemon: failed to start shim: exec: "docker-containerd-shim": executable file not found in $PATH: unknown."
+    # Se puede resolver reiniciando el servicio de docker
+    service docker restart
+
+
+

@@ -28,6 +28,7 @@ int getArgument();
 int hexaString_to_int(char* str);
 extern void execute_opcode();
 void printf(char * s);
+void get_brand();
 
 
 void start_shell(/*int width, int height*/){
@@ -189,6 +190,37 @@ void printHexa(unsigned char hexa){
     
 }
 
+void printInt(int num){
+    char resp[50] = {0};
+    char aux[50] = {0};
+    int i = 0;
+    int isNeg;
+    if(num < 0){
+        isNeg = 1;
+        num *= -1;
+    } else if(num == 0){
+        resp[0] = '0';
+        resp[1] = '\0';
+        printf(resp);
+        return;
+    } else {
+        isNeg = 0;
+    }
+
+    while(num != 0){
+        aux[i++] = (num%10) + '0';
+        num /= 10;
+    }
+    int j = 0;
+    i--;
+    while(i>0){
+        resp[j++] = aux[i];
+        i--;
+    }
+    resp[j++] = '\0';
+    printf(resp);
+}
+
 
 void get_time(){
     char time[] = {0, 0, ':', 0, 0, ':', 0, 0, '\0'};
@@ -202,6 +234,7 @@ void executeCommand(int id){
     switch(id){
         case 0:
             inforeg();
+            printf("\n");
             break;
         case 1:
             printf("");
@@ -211,48 +244,32 @@ void executeCommand(int id){
             break;
         case 2:
             help();
+            printf("\n");
             break;
         case 3:
             c = 5/0; //intento dividir por 0
             break;
         case 4:
            execute_opcode();
+           printf("\n");
            break;
         case 5:
             get_time();
+            printf("\n");
             break;
         case 6:
             get_temp();
+            printf("\n");
+            break;
+        case 7:
+            syscall_clearView();
+            break;
+        case 8:
+            get_brand();
+            printf("\n");
             break;
     }
 }
 
-/*
-int getArgument(){
-    while(1){
-        char c = getChar();
-        if(c != -1){
-            if(c == '\b'){
-                if(buffer_size != 0){
-                    buffer[buffer_size] = '\0';
-                    buffer_size--;   
-                     putChar(&c);
 
-                }
-            }
-            else if(c=='\n'){
-                                                                //si no es una direccion válida entonces error
-                return stringToNum(buffer);
-            }
-            else if(buffer_size < SCREEN_LIMIT){
-                buffer[buffer_size] = c;
-                buffer_size++;
-                 putChar(&c);
-            }
-
-        }
-    }
-    
-}
-*/
 

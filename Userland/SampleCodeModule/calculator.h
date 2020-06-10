@@ -1,7 +1,7 @@
 int isParenthesisRight(char c);
 int isParenthesisLeft(char c);
 int isValid(char c);
-char * intToString(int n);
+void intToString (int n, char * string);
 void print_answer(double n);
 int isDigit(int c);
 int isOperator(char c);

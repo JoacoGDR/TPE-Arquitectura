@@ -11,8 +11,7 @@
 #define CLEAR_VIEW 6
 #define REGISTERS 2
 
-/*char get_keyboard_buffer();
-int keyboard_buffer_is_empty();*/
+
 
 extern int seconds();
 extern int minutes();
@@ -24,7 +23,7 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 	switch(ID){
 		
 		case CLEAR_VIEW:{
-			//clearScreenDisplay();break;
+			clearScreenDisplay();break;
 		}
 
 
@@ -65,7 +64,7 @@ void syscall_dispatcher(int ID, int file_descriptor, char* string, int length){
 			switch(file_descriptor){
 				case STD_OUTPUT:{
 					drawString("Imprimiendo informacion de los registros: \n",0xfffff,0x0000);
-					printRegs(); //hay que hacerlo. 
+					printRegs();  
 				break;
 				}
 

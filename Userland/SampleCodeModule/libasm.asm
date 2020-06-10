@@ -23,9 +23,7 @@ start_VM_Driver:
     push rax
     mov rax, rdi
 	int 0x82
-	;mov [rdx], rax		;por que esto? era por el tp anterior para mandarle al start_shell()   era rax y rbx VER DE SACAR ESTO Y LA DE ABAJO!!!
-	;mov [rdx + 4], rbx	;los tamanios de la pantalla creo
-	;mov rax, rdx
+	
     pop rax
 	mov rsp, rbp
 	pop rbp 
@@ -68,11 +66,6 @@ mov eax, 80000002h
  
     
 
-
-    ;mov rdi, name 
-    ;mov rsi, 48
-    ;call syscall_write
-
     mov eax, 80000003h
     CPUID
     MOV dword  [name+16], eax
@@ -83,10 +76,6 @@ mov eax, 80000002h
     
 
 
-    ;mov rdi, name 
-    ;mov rsi, 40
-    ;call syscall_write
-;
     mov eax, 80000004h
     CPUID
     MOV dword  [name+32], eax
@@ -170,15 +159,12 @@ syscall_clearView:
     push rbx
     push rcx
     push rdx
-    mov rax, 0
-    mov rbx, 0
+
     mov rcx, 0
     mov rdx, 0
 
     mov rax, 6
     mov rbx, 1
-    mov rcx, 0 ; no se usa
-    mov rdx, 0 ; no se usa..
     int 80h
 
     pop rdx
@@ -324,135 +310,3 @@ section .data
 ;  TEMP_ALERTA - (delta)  = PC_TEMP
 ;
 ;
-;num_to_string:      ;acordate que el cociente de la division lo guarda en eax, el resto en edx, y el divisor en ecx
-;	push rbp
-;	mov rbp, rsp
-;	push rbx
-;	push rcx
-;	push rdx
-;
-; ;   mov rax, rdi
-;	mov rcx, 10             ;voy dividiendo de a 10
-;	mov rdx, 0              ;inicializo en 0 para preparar la division pensando en EDX:EAX
-; ;   mov rbx, numstr
-;	add rbx, 9              ;me posiciono al final del string
-;	mov byte [rbx], 0       ;cargo el 0 final del string
-;	dec rbx
-;.;sigo:
-;	div rcx
-;	add dl, 0x30           ;al sumarle 30 paso un valor numerico a su caracter ASCII
-;	mov [rbx], dl
-;	dec rbx
-;	cmp rax, 0
-;	je .termino
-;	mov rdx, 0       ;lleno edx con cero ya que tengo que preparar la division pensando en EDX:EAX
-;	jmp .sigo
-;.;termino:
-;	inc rbx       ;voy para adelante un espacio ya que ahora mismo estoy parado 1 posicion atras del numero
-;	mov rax, rbx
-;	pop rdx
-;	pop rcx
-;	pop rbx
-;	mov rsp, rbp
-;	pop rbp
-;	ret
-;;
-;;
-;;
-;;    print_registers:
-;;    push rbp
-;;    mov rbp, rsp
-;;    push rsp
-;;    push rdx
-;;    push rcx
-;;    push rbx
-;;    push rax
-;;    push rdi
-;;    push rsi
-;;
-;;     ;;;;RSI;;;;
-;;    mov rdi, cadena_rsi
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rsi
-;;    mov rdi, rsi
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    ;;;;RDI;;;;
-;;    mov rdi, cadena_rdi
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rdi
-;;    mov rdi, rdi
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    ;;;;RAX;;;;
-;;    mov rdi, cadena_rax
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rax
-;;    mov rdi, rax
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    ;;;;RBX;;;;
-;;    mov rdi, cadena_rbx
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rbx
-;;    mov rdi, rbx
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    ;;;;RCX;;;;
-;;    mov rdi, cadena_rcx
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rcx
-;;    mov rdi, rcx
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    ;;;;RDX;;;;
-;;    mov rdi, cadena_rdx
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rdx
-;;    mov rdi, rdx
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    ;;;;RSP;;;;
-;;    mov rdi, cadena_rsp
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rsp
-;;    push rsp
-;;    mov rdi, rsp
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    ;;;;RBP;;;;
-;;    mov rdi, cadena_rbp
-;;    mov rsi, 1
-;;    call syscall_write
-;;    pop rbp
-;;    push rbp
-;;    mov rdi, rbp
-;;    call num_to_string
-;;    mov rdi, rax
-;;    call syscall_write
-;;
-;;    mov rsp, rbp
-;;    pop rbp
-;;    ret
-;;

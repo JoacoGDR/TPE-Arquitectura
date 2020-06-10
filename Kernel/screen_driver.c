@@ -44,7 +44,7 @@ void init_screen_driver(unsigned int width, unsigned int height,unsigned int Id)
 	for(int j = 0; j<height; j++){
 		drawPixel(WALL*(CHAR_WIDTH) - Id,j,0x33333);
 	}
-	drawString("hohola",0x333,0x000);
+
 
 	current_y = SCREEN_CHAR_HEIGHT - 1;
 	current_x = WALL*screenId;
@@ -108,8 +108,6 @@ void drawChar2(char character, int fontColor ,int backgroundColor){
 
 
 
-
-
 void update_cursor() {
 	if( pixelX < (((SCREEN_LIMIT+screenId*WALL) - 1)*CHAR_WIDTH) ) {
 	 	pixelX += CHAR_WIDTH;
@@ -166,7 +164,7 @@ void move_screen_upwards() {
 		screen[height_position_to_write_next][width_position_to_write_next] = '\0';
 		
 		// tambien tengo que limpiar el resto de la linea que quedo.
-		for(int k = width_position_to_write_next; k < (SCREEN_LIMIT+WALL*screenId) ; k++) {
+		for(int k = width_position_to_write_next; k < (SCREEN_LIMIT+1+WALL*screenId) ; k++) {
 			clearCharDisplay(k * CHAR_WIDTH, height_position_to_write_next * CHAR_HEIGHT);
 		}
 
@@ -175,7 +173,7 @@ void move_screen_upwards() {
 		height_position_to_write_next += 1;
 	}
 	// tengo que vaciar la ultima linea de la pantalla y la de la matriz
-	for(int i = screenId*WALL; i < (SCREEN_LIMIT+WALL*screenId) ; i++) {
+	for(int i = screenId*WALL; i < (SCREEN_LIMIT+1+WALL*screenId) ; i++) {
 		clearCharDisplay(i * CHAR_WIDTH, screen_pixel_height - CHAR_HEIGHT);
 		screen[height_position_to_write_next][i] = '\0';
 	}
@@ -199,6 +197,18 @@ void clearCharDisplay(int x, int y) {
 	}
 }
 
+//Es basicamente un clear.
+void clearScreenDisplay(){
+	for(int i=0; i < screen_pixel_height- 2*CHAR_HEIGHT; i++){
+		for(int j= screenId*WALL; j<(WALL+SCREEN_LIMIT*screenId);j++ ){
 
-
+			clearCharDisplay(j*CHAR_WIDTH,i);
+		}
+	}
+	for(int i=0; i<SCREEN_CHAR_WIDTH; i++){
+		for(int j=0; j<SCREEN_CHAR_HEIGHT-1;j++){
+			screen[j][i] = '\0';
+		}
+	}
+}
 

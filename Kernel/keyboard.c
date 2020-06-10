@@ -87,7 +87,6 @@ char get_letter_code(uint64_t * stackPointer){
 		case TAB:
 				tab_pressed = 1;
 				saveRegisters(stackPointer);
-				drawString("Registros guardados!\n",0xffff,0x3333); 
 				return -1;
 		case TAB_RELEASED:
 				tab_pressed = 0;

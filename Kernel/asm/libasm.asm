@@ -37,8 +37,6 @@ cpuVendor:
 
 
 
-;deberia empezar con cli (para no ser interrumpido), y luego hacer sti para habilitar nuevas interrupciones
-;ahora bien, el getKey esta preguntando todo el dia, entonces queremos que sea interrumpida. 
 getKey:
 	push rbp
 	mov rbp, rsp
@@ -53,9 +51,7 @@ loop:
     
     in al,0x60 
 
-	;cmp al, 0x81
-	;jl .fin
-	;jmp loop
+	
 
 .fin:
 ;	cli  
